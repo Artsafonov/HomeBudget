@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../static/style.css"/>
+  <title>My budget Edit</title>
+
+</head>
+<body>
+<h1 style="text-align: center; font-weight: bolder; font-size: large">My budget Edit</h1>
+<div th:each="el : ${budget}">
+  <form method="post">
+    <input type="text" th:value="${el.category}" name="category"><br>
+    <input type="text" th:value="${el.amount}" name="amount" placeholder="enter new amount"><br>
+      <input type="text" th:value="${el.description}" name="description" placeholder="enter new description"><br>
+    <button type="submit">Update</button>
+
+  </form>
+  <form th:action="'/budget/'+ ${el.id} +'/remove'" method="post">
+    <button type="submit">Delete</button>
+  </form>
+</div>
+
+
+</body>
+</html>

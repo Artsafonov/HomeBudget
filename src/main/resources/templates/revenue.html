@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../static/style.css"/>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script th:inline="javascript" type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawRevenueChart);
+      function drawRevenueChart() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'category');
+          data.addColumn('number', 'amount');
+          var chartRevenueData = [[${chartRevenueData}]];
+          console.log(chartRevenueData);
+          console.log(chartRevenueData[0].category);
+          data.addRows(chartRevenueData);
+          var options = {
+              'width':600,
+              'height':500};
+          var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+      }
+  </script>
+
+  <title>My Revenue</title>
+</head>
+
+<body>
+<input type="hidden" id="yourId" th:value="${revenues}">
+<h1 style="text-align: center; font-weight: bolder; font-size: 30pt; font-family: fantasy">My Revenue</h1>
+<form action="/revenue" method="post" enctype="multipart/form-data"><br>
+  <div style="text-align: center">
+    <input type="text" list="category" name="category"/>
+    <datalist id="category">
+      <option th:each="el : ${revenueCategories}" th:name="revenueCategory" th:value="${el}">
+    </datalist>
+    <input type="number" placeholder="amount" id="amount" name="amount">
+    <input type="text" placeholder="description" id="description" name="description">
+    <button type="submit">Add record</button>
+  </div>
+</form>
+<br><br>
+
+<div style="text-align: center">
+  <table style="display: inline-block; border: 1px solid grey;" th:each="el : ${revenues}">
+    <td  th:text="${el.revenueCategory}"/>
+    <td  th:text="${el.date}"/>
+    <td style="border: 1px solid grey; width: 50px " th:text="${el.revenueAmount}"/>
+    <td  th:text="${el.revenueDescription}"/>
+    <td> <a th:href="'/revenue/'+ ${el.id}">Edit</a></td> <br>
+  </table>
+
+  <div id="chart_div" style="margin: 0 auto; width:600px; height:500px"></div>
+</div>
+
+</body>
+</html>
