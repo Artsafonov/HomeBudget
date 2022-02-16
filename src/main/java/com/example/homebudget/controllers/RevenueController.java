@@ -41,7 +41,7 @@ public class RevenueController {
                 objectList.add(x.getTotalRevenueAmount());
                 listWithData.add(objectList);
             });
-            model.addAttribute("chartRevenueData", listWithData);
+            model.addAttribute("chartData", listWithData);
         }
 
         model.addAttribute("revenues", revenues);
@@ -58,7 +58,7 @@ public class RevenueController {
         revenue.setRevenueCategory(RevenueCategory.valueOf(revenueCategory));
         revenue.setRevenueDescription(revenueDescription);
         revenueRepository.save(revenue);
-        return "redirect:/budget";
+        return "redirect:/revenue";
     }
 
 }
