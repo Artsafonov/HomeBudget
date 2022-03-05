@@ -22,7 +22,6 @@
               backgroundColor: '#4b746a'};
           var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
           chart.draw(data, options);
-
       }
   </script>
 
@@ -33,7 +32,7 @@
 <input type="hidden" id="yourId" th:value="${budgets}">
 
 <form  action="/revenue" style="position: fixed; margin-left: 20px">
-  <button class="button" style="background-color: #e78740; margin-top: 70px" type="submit"> My revenue </button>
+  <button class="button" style="background-color: #e78740; margin-top: 70px" type="submit"> My income </button>
 </form>
 
 
@@ -41,7 +40,7 @@
   <button class="button" style="background-color: rgb(120,89,71)" type="submit"> Home </button>
 </form>
 
-<h1 style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 60px/2 cursive; text-align: center;">My budget</h1>
+<h1 style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 60px/2 cursive; text-align: center;">My expense</h1>
 
 <form  action="/budget" method="post" enctype="multipart/form-data"><br>
   <div style="text-align: center">
@@ -64,7 +63,7 @@
   <th style="height: 60px">Description</th>
   <th style="height: 60px">Username</th>
    <tr style="width: 120px"  th:each="el : ${budgets}">
-  <td style="width: 120px" th:text="${el.category}"/>
+    <td style="width: 120px" th:text="${el.category}"/>
   <td style="width: 120px" th:text="${el.date}"/>
   <td  style="width: 120px" th:text="${el.amount}"/>
   <td  style="width: 200px" th:text="${el.description}"/>
@@ -73,9 +72,10 @@
     </tr>
   <th style="height: 60px">Total amount</th>
   <th th:text="${totalAmount}" style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 25px/2 cursive; text-align: center;"></th>
-</table>
+  </table>
 
   <div id="chart_div" style="margin: 0 auto; width:600px; height:500px"></div>
+
 </div>
 
 </body>

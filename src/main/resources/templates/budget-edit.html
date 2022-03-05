@@ -5,30 +5,28 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="../static/style.css"/>
   <title>My budget Edit</title>
-
 </head>
 <body style="background-color: rgb(30,66,76)">
 <div style="text-align: center; margin-top: 20pt">
-<h1  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 60px/2 cursive;" >My budget Edit</h1>
-<div th:each="el : ${budget}">
-  <form method="post">
-    <label  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;" > Category </label>
-    <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" th:value="${el.category}" name="category"><br><br>
-    <label  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;" > Amount </label>
-    <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" th:value="${el.amount}" name="amount" placeholder="enter new amount"><br><br>
-    <label  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;" > Description </label>
-    <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" th:value="${el.description}" name="description" placeholder="enter new description"><br><br>
-
-
-    <button class="glow-on-hover" style="margin-top: 10pt"  type="submit">Update</button>
-
-  </form>
-  <form th:action="'/budget/'+ ${el.id} +'/remove'" method="post">
-    <button class="glow-on-hover" style="margin-top: 10pt"  type="submit">Delete</button>
-  </form>
+  <h1 style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 60px/2 cursive;">My budget Edit</h1>
+  <div th:each="el : ${budget}">
+    <form method="post">
+      <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;"> Category </label>
+      <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text"
+             th:value="${el.category}" name="category"><br><br>
+      <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;"> Amount </label>
+      <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text"
+             th:value="${el.amount}" name="amount" placeholder="enter new amount"><br><br>
+      <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;">
+        Description </label>
+      <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text"
+             th:value="${el.description}" name="description" placeholder="enter new description"><br><br>
+      <button class="glow-on-hover" style="margin-top: 10pt" type="submit">Update</button>
+    </form>
+    <form th:action="'/budget/'+ ${el.id} +'/remove'" method="post">
+      <button class="glow-on-hover" style="margin-top: 10pt" type="submit">Delete</button>
+    </form>
+  </div>
 </div>
-</div>
-
-
 </body>
 </html>

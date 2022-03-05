@@ -47,7 +47,8 @@ public class RevenueController {
         model.addAttribute("totalRevenueAmount", revenues.stream().mapToInt(x -> x.getRevenueAmount()).sum());
         model.addAttribute("revenues", revenues);
         model.addAttribute("revenueCategories", RevenueCategory.values());
-        return "revenue";
+
+    return "revenue";
     }
 
     @PostMapping("/revenue")

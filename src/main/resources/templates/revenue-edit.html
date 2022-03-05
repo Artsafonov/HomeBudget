@@ -5,23 +5,25 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="../static/style.css"/>
   <title>My Revenue Edit</title>
-
 </head>
-<body>
-<h1 style="text-align: center; font-weight: bolder; font-size: large">My Revenue Edit</h1>
-<div th:each="el : ${revenue}">
-  <form method="post">
-    <input type="text" th:value="${el.revenueCategory}" name="category"><br>
-    <input type="text" th:value="${el.revenueAmount}" name="amount" placeholder="enter new amount"><br>
-    <input type="text" th:value="${el.revenueDescription}" name="description" placeholder="enter new description"><br>
-    <button type="submit">Update</button>
-
-  </form>
-  <form th:action="'/revenue/'+ ${el.id} +'/remove'" method="post">
-    <button type="submit">Delete</button>
-  </form>
+<body style="background-color: rgb(30,66,76)">
+<div style="text-align: center; margin-top: 20pt">
+  <h1 style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 60px/2 cursive;">My Revenue Edit</h1>
+  <div th:each="el : ${revenue}">
+    <form method="post">
+      <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;"> Category </label>
+      <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" th:value="${el.revenueCategory}" name="category"><br>
+      <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;"> Amount </label>
+      <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" th:value="${el.revenueAmount}" name="amount" placeholder="enter new amount"><br>
+      <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;">
+        Description </label>
+      <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" th:value="${el.revenueDescription}" name="description" placeholder="enter new description"><br>
+      <button class="glow-on-hover" style="margin-top: 10pt" type="submit">Update</button>
+    </form>
+    <form th:action="'/revenue/'+ ${el.id} +'/remove'" method="post">
+      <button class="glow-on-hover" style="margin-top: 10pt" type="submit">Delete</button>
+    </form>
+  </div>
 </div>
-
-
 </body>
 </html>
