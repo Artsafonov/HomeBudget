@@ -1,15 +1,16 @@
 package com.example.homebudget.controllers;
 
 import com.example.homebudget.entity.RevenueCategory;
+import com.example.homebudget.entity.User;
+import com.example.homebudget.models.Budget;
 import com.example.homebudget.models.CategoryWithRevenueAmount;
 import com.example.homebudget.models.Revenue;
 import com.example.homebudget.repository.RevenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -19,7 +20,7 @@ import java.util.*;
 public class RevenueController {
     @Autowired
     private RevenueRepository revenueRepository;
-    private Model model;
+
 
     @GetMapping("/revenue")
     public String revenue(Model model) {
@@ -43,16 +44,20 @@ public class RevenueController {
             });
             model.addAttribute("chartData", listWithData);
         }
-
+        model.addAttribute("totalRevenueAmount", revenues.stream().mapToInt(x -> x.getRevenueAmount()).sum());
         model.addAttribute("revenues", revenues);
         model.addAttribute("revenueCategories", RevenueCategory.values());
         return "revenue";
     }
 
     @PostMapping("/revenue")
-    public String revenueAdd(@RequestParam String revenueCategory, @RequestParam Integer revenueAmount, @RequestParam String revenueDescription,
-                             Model model) {
-        Revenue revenue = new Revenue(revenueCategory, revenueAmount, revenueDescription);
+    public String revenueAdd(
+            @AuthenticationPrincipal User user,
+            @RequestParam String revenueCategory,
+            @RequestParam Integer revenueAmount,
+            @RequestParam String revenueDescription,
+            Model model) {
+        Revenue revenue = new Revenue(revenueCategory, revenueAmount, revenueDescription, user);
         revenue.setDate(LocalDate.now());
         revenue.setRevenueAmount(revenueAmount);
         revenue.setRevenueCategory(RevenueCategory.valueOf(revenueCategory));
@@ -60,6 +65,37 @@ public class RevenueController {
         revenueRepository.save(revenue);
         return "redirect:/revenue";
     }
+
+    @GetMapping("/revenue/{id}")
+    public String revenueEdit(@PathVariable("id") Long id,
+                              Model model) {
+        if (!revenueRepository.existsById(id)) {
+            return "revenue";
+        }
+        Optional<Revenue> revenue = revenueRepository.findById(id);
+        ArrayList<Revenue> result = new ArrayList<>();
+        revenue.ifPresent(result::add);
+        model.addAttribute("revenue", result);
+        return "revenue-edit";
+    }
+
+    @PostMapping("/revenue/{id}")
+    public String revenueUpdate(@PathVariable("id") Long id, @RequestParam Integer amount, @RequestParam String description,
+                                @ModelAttribute Revenue revenue, Model model) {
+        Revenue databaseRevenue = revenueRepository.findById(id).orElseThrow();
+        databaseRevenue.setRevenueAmount(amount);
+        databaseRevenue.setRevenueDescription(description);
+        revenueRepository.save(databaseRevenue);
+        return "redirect:/revenue";
+    }
+
+    @PostMapping("/revenue/{id}/remove")
+    public String revenueDelete(@PathVariable("id") Long id, Model model) {
+        Revenue revenue = revenueRepository.findById(id).orElseThrow();
+        revenueRepository.delete(revenue);
+        return "redirect:/revenue";
+    }
+
 
 }
 

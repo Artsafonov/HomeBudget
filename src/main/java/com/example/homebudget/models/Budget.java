@@ -1,6 +1,7 @@
 package com.example.homebudget.models;
 
 import com.example.homebudget.entity.Category;
+import com.example.homebudget.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,11 +21,16 @@ public class Budget {
     private String description;
     private LocalDate date;
     private Integer amount;
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User username;
+
 
     public Budget() {
     }
 
-    public Budget(String category, Integer amount, String description) {
+    public Budget(String category, Integer amount, String description, User user) {
+        this.username=user;
         this.category= Category.valueOf(category);
         this.amount=amount;
         this.description=description;
@@ -69,6 +75,14 @@ public class Budget {
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
+
+       public void setUsername(User username) {
+        this.username = username;
+    }
+    public String getUsername(){
+        return username !=null ? username.getUsername() : "none";
+    }
+
 }
 
 

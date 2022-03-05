@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<form  action="/" style="position: fixed; margin-left: 45px">
+  <button class="button" style="background-color: rgb(73,197,32)" type="submit"> Home </button>
+</form>
+<div class="background">
+  <div class="shape"></div>
+  <div class="shape"></div>
+</div>
+<body  style="background-color: rgb(39,124,101)">
+<div style="text-align: center; margin-top: 20pt">
+<form th:action="@{/login}" method="post">
+  <h2  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 60px/2 cursive;" >Authorization</h2>
+  <label  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;" > User Name : </label>
+  <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" name="username"/>
+  <label  style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;"  > Password: </label>
+  <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 "  type="password" name="password"/>
+  <button type="submit" class="glow-on-hover" style="color: #04041e; margin-left: 60pt;margin-top: 10pt"><a style="text-decoration: none; font: italic small-caps bold 15px/2 cursive;"
+                                                                                                            href="/registration">LogIn</a></button>
+
+  <button class="glow-on-hover" style="margin-left: 60pt;margin-top: 10pt" ><a style="text-decoration: none; font: italic small-caps bold 15px/2 cursive;"
+                                                                               href="/registration">Registration</a></button>
+
+  <div style="font: italic small-caps bold 20px/2 cursive; color: red" th:if="${param.error}">
+    Invalid username or password.
+  </div>
+  <div style="font: italic small-caps bold 20px/2 cursive; color: red" th:if="${param.logout}">
+    You have been logged out.
+  </div>
+</form>
+</div>
+</body>
+</html>

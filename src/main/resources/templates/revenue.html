@@ -21,58 +21,58 @@
           data.addRows(chartData);
           var options = {
               'width': 600,
-              'height': 500
+              'height': 500,
+              backgroundColor: '#6d6504'
           };
           var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
           chart.draw(data, options);
       }
   </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script>
-      $(function () {
-          $(".journal tr:first td").each(function (indx) {
-              var sum = 0;
-              $("td:nth-child(" + (indx + 1) + ")", ".journal").each(function () {
-                  sum += +$(this).text()
-              });
-              $("<td/>", {text: sum}).appendTo("#test")
-          });
-      })
-  </script>
 
   <title>My revenue</title>
 </head>
-<body>
+<body style="background-color: rgb(110,102,3)">
 <input type="hidden" id="yourId" th:value="${revenues}">
-<h1 style="text-align: center; font-weight: bolder; font-size: 30pt; font-family: fantasy">My revenue</h1>
-<div style="text-align: center; margin-top: 20pt">
-  <button><a style="text-decoration: none; font-size: 14pt; color: rgb(255,155,155)" href="/budget" class="nav-link">My
-    budget</a>
-  </button>
-</div>
+<h1 style="color: #d04037; text-shadow: 3px 3px 3px #000; font: italic small-caps bold 60px/2 cursive; text-align: center;">My revenue</h1>
+
+  <form  action="/budget" style="position: fixed; margin-left: 20px">
+    <button class="button" style="background-color: #e78740; margin-top: 70px" type="submit"> My budget </button>
+  </form>
+
+  <form  action="/" style="position: fixed; margin-left: 45px">
+    <button class="button" style="background-color: rgb(120,89,71)" type="submit"> Home </button>
+  </form>
+
 <form action="/revenue" method="post" enctype="multipart/form-data"><br>
   <div style="text-align: center">
-    <input type="text" list="revenueCategory" name="revenueCategory"/>
+    <input style="height: 30px; border-radius: 10px;  background-color: #21a881 " type="text" placeholder="revenueCategory" list="revenueCategory" name="revenueCategory"/>
     <datalist id="revenueCategory">
       <option th:each="el : ${revenueCategories}" th:value="${el}">
     </datalist>
-    <input type="number" placeholder="revenueAmount" id="revenueAmount" name="revenueAmount">
-    <input type="text" placeholder="revenueDescription" id="revenueDescription" name="revenueDescription">
-    <button type="submit">Add record</button>
+    <input style="height: 30px; border-radius: 10px;  background-color: #21a881 " type="number" placeholder="revenueAmount" id="revenueAmount" name="revenueAmount">
+    <input style="height: 30px; border-radius: 10px;  background-color: #21a881 " type="text" placeholder="revenueDescription" id="revenueDescription" name="revenueDescription">
+    <button class="button" style="background-color: #c7a56c" type="submit">Add record</button>
   </div>
 </form>
 <br><br>
 <div style="text-align: center">
   <table id='test'
-         style="display: inline-block; align-content: center;  background-color: rgba(37,183,21,0.68);width: auto; height: auto">
+         style="display: inline-block; align-content: center;  border-radius: 30px; background-color: rgb(191,87,7);width: auto; height: auto">
+    <th style="height: 60px">Category</th>
+    <th style="height: 60px">Date</th>
+    <th style="height: 60px">Amount</th>
+    <th style="height: 60px">Description</th>
     <tr style="width: 120px" th:each="el : ${revenues}">
       <td style="width: 120px" th:text="${el.revenueCategory}"/>
       <td style="width: 120px" th:text="${el.date}"/>
       <td style="width: 120px" th:text="${el.revenueAmount}"/>
-      <td style="width: 120px" th:text="${el.revenueDescription}"/>
-      <td><a th:href="'/revenue/'+ ${el.id}">Edit</a></td>
+      <td style="width: 200px" th:text="${el.revenueDescription}"/>
+      <td  style="width: 120px" th:text="${el.username}"/>
+      <td style="width: 150px"><a th:href="'/revenue/'+ ${el.id}">Edit</a></td>
     </tr>
     <th style="height: 60px">Total amount</th>
+    <th th:text="${totalRevenueAmount}" style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 25px/2 cursive; text-align: center;"></th>
   </table>
   <div id="chart_div" style="margin: 0 auto; width:600px; height:500px"></div>
 </div>

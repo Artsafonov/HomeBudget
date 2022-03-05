@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<div style="text-align: center; margin-top: 20pt">
-  <button><a style="text-decoration: none; font-size: 14pt; color: #119b00" href="/" class="nav-link">Home</a></button>
-</div>
-<body>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+
+<form  action="/" style="position: fixed; margin-left: 45px">
+  <button class="button" style="background-color: rgb(56,150,25)" type="submit"> Home </button>
+</form>
+<body  style="background-color: rgb(76,117,106)">
 <div style="text-align: center; margin-top: 20pt">
 <form th:action="@{/registration}" method="post">
-  <h2>New user registration</h2>
-  <label> User Name : </label>
-  <input type="text" name="username"/>
-  <label > Password: </label>
-  <input type="password" name="password"/>
-
+  <h2 style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 60px/2 cursive;" >New user registration</h2>
+  <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;" > User Name : </label>
+  <input style="height: 40px; width: 220px; border-radius: 10px;  background-color: #21a881 " type="text" name="username"/>
+  <label style="text-shadow: 3px 3px 3px #ffffff; font: italic small-caps bold 25px/2 cursive;"  > Password: </label>
+  <input style="height: 40px; width: 220px;  border-radius: 10px;  background-color: #21a881 " type="password" name="password"/>
   <br><br>
   <div style="text-align: center; margin-top: 20pt">
-  <button type="submit" class="glow-on-hover" style="color: #04041e; text-align: center;margin-top: 10pt">Sign Up</button>
+  <button type="submit" class="button" style="background-color: rgb(140,66,23)" >Sign Up</button>
   </div>
-  <div style="text-align: center; margin-top: 10pt; color: #fd0000" th:if="${message}">
+  <br><br>
+  <div style="font: italic small-caps bold 20px/2 cursive; color: red" th:if="${message}">
     This username is already taken.
   </div>
 </form>

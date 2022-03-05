@@ -17,8 +17,9 @@
           console.log(chartData[0].category);
           data.addRows(chartData);
           var options = {
-              'width':600,
-              'height':500};
+              'width':800,
+              'height':700,
+              backgroundColor: '#4b746a'};
           var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
           chart.draw(data, options);
 
@@ -28,44 +29,51 @@
           <title>My budget</title>
 </head>
 
-<body style="background-color: rgba(91,138,64,0.81)">
+<body style="background-color: rgb(76,117,106)">
 <input type="hidden" id="yourId" th:value="${budgets}">
 
 <form  action="/revenue" style="position: fixed; margin-left: 20px">
-  <button class="button" style="background-color: #119b00; margin-top: 70px"  type="submit"> My revenue </button>
+  <button class="button" style="background-color: #e78740; margin-top: 70px" type="submit"> My revenue </button>
 </form>
 
 
 <form  action="/" style="position: fixed; margin-left: 45px">
-  <button class="button" style="background-color: rgb(255,113,24)" type="submit"> Home </button>
+  <button class="button" style="background-color: rgb(120,89,71)" type="submit"> Home </button>
 </form>
 
-<h1 style="text-shadow: beige; font: italic small-caps bold 60px/2 cursive; text-align: center;">My budget</h1>
+<h1 style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 60px/2 cursive; text-align: center;">My budget</h1>
 
 <form  action="/budget" method="post" enctype="multipart/form-data"><br>
   <div style="text-align: center">
-    <input style="height: 30px; border-radius: 10px"type="text" placeholder="category" list="category" name="category"/>
+    <input style="height: 30px; border-radius: 10px;  background-color: #21a881 "type="text" placeholder="category" list="category" name="category"/>
     <datalist id="category">
       <option th:each="el : ${categories}" th:value="${el}">
     </datalist>
-    <input style="height: 30px; border-radius: 10px" type="number" placeholder="amount" id="amount" name="amount">
-    <input style="height: 30px; border-radius: 10px" type="text" placeholder="description" id="description" name="description">
-    <button class="button" type="submit">Add record</button>
+    <input style="height: 30px; border-radius: 10px; background-color: #21a881 " type="number" placeholder="amount" id="amount" name="amount">
+    <input style="height: 30px; border-radius: 10px;  background-color: #21a881 " type="text" placeholder="description" id="description" name="description">
+    <button class="button" style="background-color: #795a47" type="submit">Add record</button>
   </div>
 </form>
 <br><br>
 
 <div style="text-align: center">
-<table style="display: inline-block;  border-radius: 30px; background-color: rgba(246,104,26,0.76)">
-  <tr style="width: 120px"  th:each="el : ${budgets}">
+<table style="display: inline-block;  border-radius: 30px; background-color: rgb(233,180,129)">
+  <th style="height: 60px">Category</th>
+  <th style="height: 60px">Date</th>
+  <th style="height: 60px">Amount</th>
+  <th style="height: 60px">Description</th>
+  <th style="height: 60px">Username</th>
+   <tr style="width: 120px"  th:each="el : ${budgets}">
   <td style="width: 120px" th:text="${el.category}"/>
   <td style="width: 120px" th:text="${el.date}"/>
   <td  style="width: 120px" th:text="${el.amount}"/>
-  <td  th:text="${el.description}"/>
-  <td style="width: 120px"> <a th:href="'/budget/'+ ${el.id}">Edit</a></td>
-    </tr><br>
+  <td  style="width: 200px" th:text="${el.description}"/>
+    <td  style="width: 120px" th:text="${el.username}"/>
+  <td style="width: 150px"> <a th:href="'/budget/'+ ${el.id}">Edit</a></td>
+    </tr>
+  <th style="height: 60px">Total amount</th>
+  <th th:text="${totalAmount}" style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 25px/2 cursive; text-align: center;"></th>
 </table>
-  <br><br>
 
   <div id="chart_div" style="margin: 0 auto; width:600px; height:500px"></div>
 </div>
