@@ -2,7 +2,6 @@ package com.example.homebudget.controllers;
 
 import com.example.homebudget.entity.RevenueCategory;
 import com.example.homebudget.entity.User;
-import com.example.homebudget.models.Budget;
 import com.example.homebudget.models.CategoryWithRevenueAmount;
 import com.example.homebudget.models.Revenue;
 import com.example.homebudget.repository.RevenueRepository;
@@ -48,7 +47,7 @@ public class RevenueController {
         model.addAttribute("revenues", revenues);
         model.addAttribute("revenueCategories", RevenueCategory.values());
 
-    return "revenue";
+        return "revenue";
     }
 
     @PostMapping("/revenue")

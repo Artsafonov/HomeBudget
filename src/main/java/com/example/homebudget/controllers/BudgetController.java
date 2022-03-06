@@ -3,8 +3,8 @@ package com.example.homebudget.controllers;
 import com.example.homebudget.entity.Category;
 import com.example.homebudget.entity.User;
 import com.example.homebudget.models.Budget;
-import com.example.homebudget.models.CategoryWithAmount;
 import com.example.homebudget.repository.BudgetRepository;
+import com.example.homebudget.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -20,35 +22,20 @@ public class BudgetController {
     @Autowired
     private BudgetRepository budgetRepository;
 
+    @Autowired
+    private BudgetService budgetService;
 
     @GetMapping("/budget")
     public String budget(Model model) {
         List<Budget> budgets = (List<Budget>) budgetRepository.findAll();
-        Map<String, CategoryWithAmount> chartDataRaw = new HashMap<>();
-        for (Budget budget : budgets) {
-            CategoryWithAmount categoryWithAmount = chartDataRaw.get(budget.getCategory().name());
-            if (categoryWithAmount == null) {
-                categoryWithAmount = new CategoryWithAmount();
-                categoryWithAmount.setCategory(budget.getCategory().name());
-                chartDataRaw.put(budget.getCategory().name(), categoryWithAmount);
-            }
-            categoryWithAmount.setTotalAmount(categoryWithAmount.getTotalAmount() + budget.getAmount());
-            Collection<CategoryWithAmount> values = chartDataRaw.values();
-            List<List> listWithData = new ArrayList<>();
-            values.forEach(x -> {
-                List objectList = new ArrayList();
-                objectList.add(x.getCategory());
-                objectList.add(x.getTotalAmount());
-                listWithData.add(objectList);
-            });
-            model.addAttribute("chartData", listWithData);
-        }
+        model.addAttribute("chartData", budgetService.prepareChartData(budgets));
         model.addAttribute("totalAmount", budgets.stream().mapToInt(x -> x.getAmount()).sum());
         model.addAttribute("budgets", budgets);
         model.addAttribute("categories", Category.values());
         return "budget";
     }
 
+    //formFieldName:formFieldValue&formField2Name:formFieldValue2
     @PostMapping("/budget")
     public String budgetAdd(
             @AuthenticationPrincipal User user,

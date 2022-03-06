@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../static/style.css"/>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script th:inline="javascript" type="text/javascript">
+      google.charts.load('current', {'packages': ['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'revenueCategory');
+          data.addColumn('number', 'revenueAmount');
+          var chartData = [[${chartData}]];
+          console.log(chartData);
+          console.log(chartData[0].revenueCategory);
+          data.addRows(chartData);
+          var options = {
+              'width': 600,
+              'height': 500,
+              backgroundColor: '#6d6504'
+          };
+          var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+      }
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <title>My budget</title>
+</head>
+<body style="background-color: rgb(76,117,106)">
+<input type="hidden" id="yourId" th:value="${revenues}">
+
+
+  <form action="/" style="position: fixed; margin-top: 50px; margin-left: 45px">
+    <button class="button" style="background-color: rgb(120,89,71)" type="submit"> Home</button>
+  </form>
+
+<br><br><br><br>
+
+<div>
+  <form action="/revenue" style="position: fixed; margin-left: 20px">
+    <button class="button" style="background-color: #37831d; margin-top: 70px" type="submit"> My income</button>
+  </form>
+</div>
+<br><br><br><br>
+
+<div>
+  <form action="/budget" style="position: fixed; margin-left: 20px">
+    <button class="button" style="background-color: #e78740; margin-top: 70px" type="submit"> My expense</button>
+  </form>
+</div>
+
+<h1 style="text-shadow: 3px 3px 3px #faf9f9; font: italic small-caps bold 60px/2 cursive; text-align: center;">My
+  Budget</h1>
+
+<div id="chart_div" style="margin: 0 auto; width:600px; height:500px"></div>
+</body>
+</html>
